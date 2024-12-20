@@ -1,4 +1,4 @@
-# [RBlogs](https://r-blogs-frontend.vercel.app/)
+# RBlogs API
 
 Backend of RBLogs
 
