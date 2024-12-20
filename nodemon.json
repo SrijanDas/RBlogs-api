@@ -1,0 +1,5 @@
+{
+    "watch": ["src"],
+    "ext": "ts",
+    "exec": "tsx watch --clear-screen=false src/index.ts"
+}
