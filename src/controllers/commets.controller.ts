@@ -10,6 +10,7 @@ import { CommentValidator } from "../validators/comment.validator";
 import { z } from "zod";
 import { validate } from "../validators/request.validator";
 import { StatusCodes } from "http-status-codes";
+import BlogModel from "../models/blog.model";
 
 export async function getCommentsByBlogId(
     req: Request,
@@ -61,6 +62,16 @@ export async function postComment(req: Request, res: Response): Promise<any> {
             createdBy,
             blogId,
         });
+
+        if (!comment) {
+            return sendApiResponse({
+                success: false,
+                res,
+                msg: "Failed to post comment",
+            });
+        }
+
+        await BlogModel.updateOne({ _id: blogId }, { $inc: { comments: 1 } });
 
         const serializedComment = await serializeComment(comment);
         return sendApiResponse({
