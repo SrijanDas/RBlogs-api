@@ -1,29 +1,38 @@
-
 # RBlogs
-Read and write blogs
+
+Backend of RBLogs
 
 ## Tech Stack
 
-**Frontend:** Typescript, Vite, React, Shadcn, Tailwind-css
+**Frontend:** Typescript, Vite, React, Shadcn, Tailwind-css [(Backend Repo URL)](https://github.com/SrijanDas/RBlogs)
 
 **Backend:** Typescript, Nodejs, Express [(Backend Repo URL)](https://github.com/SrijanDas/RBlogs-api)
 
 **Database:** MongoDB
 
-
-
 ## Run Locally
+
+Setup ENV variables
+
+```bash
+PORT=
+NODE_ENV=
+HOST=
+CORS_ORIGIN=
+MONGO_URI=
+JWT_SECRET=
+```
 
 Clone the project
 
 ```bash
-  git clone [https://link-to-project](https://github.com/SrijanDas/RBlogs-api.git)
+  git clone https://github.com/SrijanDas/RBlogs-api.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd RBlogs-frontend
+  cd RBlogs-api
 ```
 
 Install dependencies
@@ -37,4 +46,3 @@ Start the dev server
 ```bash
   npm run dev
 ```
-
