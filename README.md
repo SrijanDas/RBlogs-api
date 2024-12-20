@@ -15,10 +15,10 @@ Backend of RBLogs
 -   [x] User Authentication with JWT
 -   [x] Posting Blogs
 -   [x] CRUD operations on Blogs
+-   [x] Commenting on a blog
 
 ## Features to be added later in the future
 
--   [ ] Commenting on a blog
 -   [ ] Likes on blogs
 -   [ ] Email verification
 -   [ ] Change Password
