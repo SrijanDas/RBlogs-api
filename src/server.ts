@@ -8,6 +8,7 @@ import healthCheckRouter from "./routes/health.router";
 import connectDatabase from "./lib/db-connect";
 import authRouter from "./routes/auth.router";
 import blogsRouter from "./routes/blogs.router";
+import commentsRouter from "./routes/comments.router";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();
@@ -25,5 +26,6 @@ app.use("/health-check", healthCheckRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/blogs", blogsRouter);
+app.use("/comments", commentsRouter);
 
 export { app, logger };

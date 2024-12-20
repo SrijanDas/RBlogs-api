@@ -19,3 +19,12 @@ export type Blog = {
     createdAt: Date;
     updatedAt: Date;
 };
+
+export type Comment = {
+    _id: Types.ObjectId;
+    blogId: string;
+    content: string;
+    createdBy: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
