@@ -1,3 +1,5 @@
-// declare module "express-serve-static-core" {
-//     export interface Request {}
-// }
+export type JwtPayload = {
+    id: string;
+    iat: number;
+    exp: number;
+};

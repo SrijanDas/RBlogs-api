@@ -11,4 +11,6 @@ export const env = cleanEnv(process.env, {
     HOST: host({ devDefault: testOnly("localhost") }),
     PORT: port({ devDefault: testOnly(3000) }),
     CORS_ORIGIN: str({ devDefault: testOnly("http://localhost:3000") }),
+    MONGO_URI: str(),
+    JWT_SECRET: str(),
 });

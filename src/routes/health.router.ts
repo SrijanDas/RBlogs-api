@@ -1,5 +1,5 @@
-import { sendApiResponse } from "@/lib/api-response-handler";
 import express, { type Request, type Response, type Router } from "express";
+import { sendApiResponse } from "../lib/api-response-handler";
 
 const healthCheckRouter: Router = express.Router();
 

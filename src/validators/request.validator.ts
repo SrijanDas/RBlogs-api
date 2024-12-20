@@ -1,29 +1,24 @@
-import { sendApiResponse } from "@/lib/api-response-handler";
-import type { NextFunction, Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import type { ZodError, ZodSchema } from "zod";
+import { z } from "zod";
+import { fromZodError } from "zod-validation-error";
 
-export const validateRequest =
-    (schema: ZodSchema) =>
-    (req: Request, res: Response, next: NextFunction) => {
-        try {
-            schema.parse({
-                body: req.body,
-                query: req.query,
-                params: req.params,
-            });
-            next();
-        } catch (err) {
-            const errorMessage = `Invalid input: ${(err as ZodError).errors
-                .map((e) => e.message)
-                .join(", ")}`;
-            const statusCode = StatusCodes.BAD_REQUEST;
-
-            return sendApiResponse({
-                res,
-                status: statusCode,
-                success: false,
-                msg: errorMessage,
-            });
-        }
+export async function validate<
+    P extends object,
+    T extends z.ZodObject<
+        P extends z.ZodRawShape ? P : {},
+        "strip",
+        z.ZodTypeAny,
+        P,
+        P
+    >
+>(data: P, Schema: T) {
+    const result = await Schema.safeParseAsync(data);
+    if (result.success) return result;
+    const error = fromZodError(result.error, {
+        issueSeparator: " | ",
+        maxIssuesInMessage: 1,
+    });
+    return {
+        success: result.success,
+        message: error.message.replace("Validation e", "E"),
     };
+}

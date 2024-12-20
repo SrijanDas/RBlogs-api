@@ -1,8 +1,9 @@
-import { signUp } from "@/controllers/user.controller";
 import { Router } from "express";
+import { getProfile } from "../controllers/user.controller";
+import authenticateToken from "../middleware/authenticate";
 
 const userRouter = Router();
 
-userRouter.post("/sign-up", signUp);
+userRouter.get("/profile", authenticateToken, getProfile);
 
 export default userRouter;
