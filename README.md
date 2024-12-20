@@ -20,6 +20,8 @@ Backend of RBLogs
 
 -   [ ] Commenting on a blog
 -   [ ] Likes on blogs
+-   [ ] Email verification
+-   [ ] Notifications
 
 ## Run Locally
 
