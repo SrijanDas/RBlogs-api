@@ -21,6 +21,7 @@ Backend of RBLogs
 -   [ ] Commenting on a blog
 -   [ ] Likes on blogs
 -   [ ] Email verification
+-   [ ] Change Password
 -   [ ] Notifications
 
 ## Run Locally
