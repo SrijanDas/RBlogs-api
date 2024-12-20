@@ -24,7 +24,7 @@ export default async function authenticateToken(
             token,
             env.JWT_SECRET
         ) as JwtPayload;
-        req.body.userId = decoded.id;
+        req.userId = decoded.id;
         next();
     } catch (err: any) {
         return sendApiResponse({

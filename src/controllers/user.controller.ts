@@ -6,7 +6,7 @@ import { StatusCodes } from "http-status-codes";
 export async function getProfile(req: Request, res: Response): Promise<any> {
     try {
         // check if user exists
-        const userExists = await UserModel.findById(req.body.userId);
+        const userExists = await UserModel.findById(req.userId);
         if (!userExists) {
             return sendApiResponse({
                 success: false,
@@ -20,9 +20,11 @@ export async function getProfile(req: Request, res: Response): Promise<any> {
             success: true,
             res,
             data: {
-                userId: userExists._id,
-                email: userExists.email,
-                name: userExists.name,
+                user: {
+                    userId: userExists._id,
+                    email: userExists.email,
+                    name: userExists.name,
+                },
             },
         });
     } catch (err: any) {
