@@ -6,7 +6,10 @@ import {
     serializeComments,
 } from "../serializers/comments.serializer";
 import { sendApiResponse } from "../lib/api-response-handler";
-import { CommentValidator } from "../validators/comment.validator";
+import {
+    CommentValidator,
+    UpdateCommentValidator,
+} from "../validators/comment.validator";
 import { z } from "zod";
 import { validate } from "../validators/request.validator";
 import { StatusCodes } from "http-status-codes";
@@ -93,9 +96,9 @@ export async function postComment(req: Request, res: Response): Promise<any> {
 
 export async function updateComment(req: Request, res: Response): Promise<any> {
     try {
-        const body: z.infer<typeof CommentValidator> = req.body;
+        const body: z.infer<typeof UpdateCommentValidator> = req.body;
 
-        const isValid = await validate(body, CommentValidator);
+        const isValid = await validate(body, UpdateCommentValidator);
         if (!isValid.success) {
             return sendApiResponse({
                 success: false,
@@ -105,17 +108,24 @@ export async function updateComment(req: Request, res: Response): Promise<any> {
             });
         }
 
-        const { content, blogId } = body;
+        const { content } = body;
         const commentId = req.params.commentId;
 
         const comment = await CommentModel.findOneAndUpdate(
-            { _id: commentId },
+            { _id: commentId, createdBy: req.userId },
             {
                 content,
-                blogId,
             },
             { new: true }
         );
+
+        if (!comment) {
+            return sendApiResponse({
+                success: false,
+                res,
+                msg: "Failed to update comment",
+            });
+        }
 
         const serializedComment = await serializeComment(comment);
 
@@ -139,8 +149,18 @@ export async function updateComment(req: Request, res: Response): Promise<any> {
 export async function deleteComment(req: Request, res: Response): Promise<any> {
     try {
         const commentId = req.params.commentId;
-        await CommentModel.deleteOne({ _id: commentId });
+        const comment = await CommentModel.deleteOne({
+            _id: commentId,
+            createdBy: req.userId,
+        });
 
+        if (comment.deletedCount === 0) {
+            return sendApiResponse({
+                success: false,
+                res,
+                msg: "Unable to delete comment",
+            });
+        }
         return sendApiResponse({
             success: true,
             res,
