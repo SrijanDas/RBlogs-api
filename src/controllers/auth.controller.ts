@@ -151,10 +151,28 @@ export async function verifyToken(req: Request, res: Response): Promise<any> {
             });
         }
 
+        const userExists = await UserModel.findById(decoded.id);
+
+        if (!userExists) {
+            return sendApiResponse({
+                success: false,
+                msg: "User not found",
+                res,
+                status: StatusCodes.NOT_FOUND,
+            });
+        }
+
         return sendApiResponse({
             success: true,
             msg: "Token is valid",
             res,
+            data: {
+                user: {
+                    userId: userExists._id,
+                    email: userExists.email,
+                    name: userExists.name,
+                },
+            },
         });
     } catch (err: any) {
         return sendApiResponse({
